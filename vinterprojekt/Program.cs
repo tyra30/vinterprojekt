@@ -11,7 +11,7 @@ namespace vinterprojekt
             //GAME
             int screenWidth = 1920;
             int screenHeight = 1000;
-            string gamestate = "level1";
+            string gamestate = "level2";
 
             //LEVEL 1
             Button level1P = new Button(650, 900, 150, 150, 60, "P");
@@ -19,6 +19,9 @@ namespace vinterprojekt
             Button level1A = new Button(1250, 150, 200, 100, 200, "A");
             Button level1Y = new Button(1400, 550, 50, 50, 30, "Y");
             Button level1b = new Button(675, 500, 600, 210, 30, "");
+
+            //LEVEL 2
+            Player snowman = new Player(50, 50, 50, 50);
 
             Color startColor = Color.LIGHTGRAY;
 
@@ -79,8 +82,17 @@ namespace vinterprojekt
                 }
                 else if (gamestate == "level2")
                 {
+                    //LOGIK LEVEL2
+                    snowman.Update();
+
+                    //DRAW LEVEL 2
+
                     Raylib.BeginDrawing();
                     Raylib.ClearBackground(Color.WHITE);
+
+                    snowman.Draw();
+
+
                     Raylib.EndDrawing();
 
                 }
