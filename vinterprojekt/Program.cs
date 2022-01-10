@@ -21,7 +21,11 @@ namespace vinterprojekt
             Button level1b = new Button(675, 500, 600, 210, 30, "");
 
             //LEVEL 2
-            Player snowman = new Player(50, 50, 50, 50);
+            Player snowman = new Player(50, 50);
+            List<Platform> platformsLevel2 = new List<Platform>();
+
+            platformsLevel2.Add(new Platform(0, 800, 1920, 200)); //platformsLevel2[0]
+            platformsLevel2.Add(new Platform(400, 500, 100, 50)); //platformsLevel2[1]
 
             Color startColor = Color.LIGHTGRAY;
 
@@ -85,12 +89,28 @@ namespace vinterprojekt
                     //LOGIK LEVEL2
                     snowman.Update();
 
+                    foreach (Platform p in platformsLevel2)
+                    {
+                        if (Raylib.CheckCollisionRecs(snowman.rec, p.rec))
+                        {
+                            snowman.Collide(p.rec);
+                        }
+                    }
+
+
+
+
                     //DRAW LEVEL 2
 
                     Raylib.BeginDrawing();
-                    Raylib.ClearBackground(Color.WHITE);
+                    Raylib.ClearBackground(Color.SKYBLUE);
 
                     snowman.Draw();
+
+                    foreach (Platform p in platformsLevel2)
+                    {
+                        p.Draw();
+                    }
 
 
                     Raylib.EndDrawing();
