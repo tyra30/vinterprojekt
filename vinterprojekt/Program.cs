@@ -11,7 +11,7 @@ namespace vinterprojekt
             //GAME
             int screenWidth = 1920;
             int screenHeight = 1000;
-            string gamestate = "level1";
+            string gamestate = "level2";
 
             //LEVEL 1
             Button level1P = new Button(650, 900, 150, 150, 60, "P");
@@ -32,7 +32,8 @@ namespace vinterprojekt
             List<Item> itemsLevel2 = new List<Item>();
 
             itemsLevel2.Add(new Key(200, 200, 50, 50)); //key[0]
-            itemsLevel2.Add(new Coin(400, 400, 50, 50)); //coin[1]
+            itemsLevel2.Add(new Coin(800, 300, 50, 50)); //coin[1]
+            itemsLevel2.Add(new Coin(1200, 500, 50, 50)); //coin[2]
 
             Door door = new Door(1850, 700, 50, 100);
 
@@ -141,6 +142,8 @@ namespace vinterprojekt
                     }
 
                     door.Draw();
+
+                    Raylib.DrawText("Coins: " + snowman.coinCounter, 1600, 10, 50, Color.BLACK);
 
 
                     Raylib.EndDrawing();

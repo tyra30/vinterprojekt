@@ -31,6 +31,8 @@ namespace vinterprojekt
 
         public List<Item> inventory = new List<Item>();
 
+        public int coinCounter = 0;
+
 
         public Player(int x, int y)
         {
@@ -47,6 +49,7 @@ namespace vinterprojekt
         public void Update()
         {
             KeyboardInput();
+            isGrounded = false;
 
             rec.x += xDir * speed;
 
@@ -55,7 +58,10 @@ namespace vinterprojekt
 
             UpdateCollisionBoxes();
 
+            UpdateCoinCounter();
+
         }
+
 
         private void UpdateCollisionBoxes()
         {
@@ -87,7 +93,7 @@ namespace vinterprojekt
             {
                 xDir = 0;
             }
-            if (Raylib.IsKeyPressed(KeyboardKey.KEY_UP))
+            if (Raylib.IsKeyPressed(KeyboardKey.KEY_UP) && isGrounded)
             {
                 yVel = -20f;
             }
@@ -105,14 +111,7 @@ namespace vinterprojekt
 
         }
 
-        public void LandOnGround()
-        {
-            isGrounded = true;
 
-            //Stop Player Y Movement
-            yAcc = 0;
-            yVel = 0;
-        }
 
         public void Collide(Rectangle r)
         {
@@ -128,6 +127,7 @@ namespace vinterprojekt
             {
                 rec.y = r.y - rec.height;
                 yVel = 0;
+                isGrounded = true;
             }
             //RIGHT COLLISION
             else if (Raylib.CheckCollisionRecs(right, r) && xDir > 0)
@@ -165,6 +165,20 @@ namespace vinterprojekt
 
             return false;
 
+        }
+
+
+        private void UpdateCoinCounter()
+        {
+            int counter = 0;
+            foreach (Item item in inventory)
+            {
+                if (item is Coin)
+                {
+                    counter++;
+                }
+            }
+            coinCounter = counter;
         }
     }
 }
