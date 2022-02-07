@@ -11,7 +11,7 @@ namespace vinterprojekt
             //GAME
             int screenWidth = 1920;
             int screenHeight = 1000;
-            string gamestate = "level2";
+            string gamestate = "level1";
 
             //LEVEL 1
             Button level1P = new Button(650, 900, 150, 150, 60, "P");
@@ -21,13 +21,21 @@ namespace vinterprojekt
             Button level1b = new Button(675, 500, 600, 210, 30, "");
 
             //LEVEL 2
-            Player snowman = new Player(50, 50);
+            Player snowman = new Player(50, 400);
             List<Platform> platformsLevel2 = new List<Platform>();
 
             platformsLevel2.Add(new Platform(0, 800, 1920, 200)); //platformsLevel2[0]
             platformsLevel2.Add(new Platform(400, 500, 100, 50)); //platformsLevel2[1]
 
             Color startColor = Color.LIGHTGRAY;
+
+            List<Item> itemsLevel2 = new List<Item>();
+
+            itemsLevel2.Add(new Key(200, 200, 50, 50)); //key[0]
+            itemsLevel2.Add(new Coin(400, 400, 50, 50)); //coin[1]
+
+            Door door = new Door(1850, 700, 50, 100);
+
 
             //RAYLIB INITIALIZATION
             Raylib.InitWindow(screenWidth, screenHeight, "5000 IQ GAME winter edition");
@@ -97,6 +105,21 @@ namespace vinterprojekt
                         }
                     }
 
+                    foreach (Item item in itemsLevel2)
+                    {
+                        if (Raylib.CheckCollisionRecs(snowman.rec, item.rec) && item.active)
+                        {
+                            snowman.Pickup(item);
+                        }
+                    }
+
+                    if (Raylib.CheckCollisionRecs(snowman.rec, door.rec))
+                    {
+                        if (snowman.HasKey())
+                        {
+                            gamestate = "level3";
+                        }
+                    }
 
 
 
@@ -112,9 +135,25 @@ namespace vinterprojekt
                         p.Draw();
                     }
 
+                    foreach (Item item in itemsLevel2)
+                    {
+                        item.Draw();
+                    }
+
+                    door.Draw();
+
 
                     Raylib.EndDrawing();
 
+                }
+                else if (gamestate == "level3")
+                {
+                    //DRAW LEVEL 3
+
+                    Raylib.BeginDrawing();
+                    Raylib.ClearBackground(Color.WHITE);
+
+                    Raylib.EndDrawing();
                 }
             }
         }

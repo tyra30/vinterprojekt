@@ -1,6 +1,7 @@
 using System;
 using Raylib_cs;
 using System.Numerics;
+using System.Collections.Generic;
 
 namespace vinterprojekt
 {
@@ -14,7 +15,7 @@ namespace vinterprojekt
         private Rectangle right;
 
         private float collisionThickness = 0.3f;
-        private float margin = 24f;
+        private float margin = 13f;
 
         public int xDir = 0;
 
@@ -27,6 +28,8 @@ namespace vinterprojekt
         public float yAcc = gravity;
 
         public bool isGrounded;
+
+        public List<Item> inventory = new List<Item>();
 
 
         public Player(int x, int y)
@@ -114,34 +117,54 @@ namespace vinterprojekt
         public void Collide(Rectangle r)
         {
 
-            //RIGHT COLLISION
-            if (Raylib.CheckCollisionRecs(right, r))
-            {
-                rec.x = r.x - rec.width;
-                xDir = 0;
-            }
-            //LEFT COLLISION
-            else if (Raylib.CheckCollisionRecs(left, r))
-            {
-                rec.x = r.x + r.width;
-                xDir = 0;
-            }
             //TOP COLLISION
-            else if (Raylib.CheckCollisionRecs(top, r))
+            if (Raylib.CheckCollisionRecs(top, r) && yVel < 0)
             {
                 rec.y = r.y + r.height;
                 yVel = 0;
             }
             //DOWN COLLISION
-            else if (Raylib.CheckCollisionRecs(down, r))
+            else if (Raylib.CheckCollisionRecs(down, r) && yAcc > 0)
             {
                 rec.y = r.y - rec.height;
                 yVel = 0;
+            }
+            //RIGHT COLLISION
+            else if (Raylib.CheckCollisionRecs(right, r) && xDir > 0)
+            {
+                rec.x = r.x - rec.width;
+                xDir = 0;
+            }
+            //LEFT COLLISION
+            else if (Raylib.CheckCollisionRecs(left, r) && xDir < 0)
+            {
+                rec.x = r.x + r.width;
+                xDir = 0;
             }
 
             UpdateCollisionBoxes();
         }
 
+        public void Pickup(Item item)
+        {
+            item.active = false;
 
+            inventory.Add(item);
+
+        }
+
+        public bool HasKey()
+        {
+            foreach (Item item in inventory)
+            {
+                if (item is Key)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
+        }
     }
 }
