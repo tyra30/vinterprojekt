@@ -33,7 +33,7 @@ namespace vinterprojekt
 
         public int coinCounter = 0;
 
-
+        // Denna del av koden är skriven med hjälp av Albin
         public Player(int x, int y)
         {
             rec.x = x;

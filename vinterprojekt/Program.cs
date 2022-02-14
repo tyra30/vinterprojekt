@@ -11,7 +11,7 @@ namespace vinterprojekt
             //GAME
             int screenWidth = 1920;
             int screenHeight = 1000;
-            string gamestate = "level2";
+            string gamestate = "level1";
 
             //LEVEL 1
             Button level1P = new Button(650, 900, 150, 150, 60, "P");
